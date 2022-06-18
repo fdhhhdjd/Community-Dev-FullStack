@@ -18,6 +18,7 @@ module.exports = (req, res, next) => {
     let decodedToken;
     if (isCustomAuth) {
       decodedToken = jwt.verify(token, ACCESS_TOKEN_SECRET);
+
       req.userData = { userId: decodedToken.userId }; //add data to request
     } else {
       decodedToken = jwt.decode(token);

@@ -61,6 +61,7 @@ app.use((error, req, res, next) => {
 const User = require("./Routes/UserRoute.js");
 const Post = require("./Routes/PostsRoute");
 const Upload = require("./Routes/UploadRoute");
+const Comment = require("./Routes/CommentsRoute");
 
 //!Link router Main
 //?Auth
@@ -68,6 +69,11 @@ app.use("/api/auth", User);
 
 //?Post
 app.use("/api/post", Post);
+
+//?Comment
+
+app.use("/api/comment", Comment);
+
 //? Image
 app.use("/api", Upload);
 

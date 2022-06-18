@@ -18,5 +18,25 @@ const createTags = async (tags, post) => {
     );
   }
 };
+const updateTags = async (tags, post) => {
+  await createTags(tags, post);
+  await removeTags(tags, post);
+};
+
+const removeTags = async (tags, post) => {
+  for (const [i, tag] of post.tags.entries()) {
+    if (!tags.includes(tag.name)) {
+      await Tag.updateOne(
+        { _id: post.tags[i]._id },
+        { $pull: { posts: post._id } }
+      );
+      await Post.updateOne(
+        { _id: post._id },
+        { $pull: { tags: post.tags[i]._id } }
+      );
+    }
+  }
+};
 
 exports.createTags = createTags;
+exports.updateTags = updateTags;

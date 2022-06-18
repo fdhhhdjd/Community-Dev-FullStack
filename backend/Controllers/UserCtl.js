@@ -5,6 +5,11 @@ const CONSTANTS = require("../Configs/contants");
 const bcrypt = require("bcryptjs");
 const User = require("../Models/UserModel");
 const fetch = require("node-fetch");
+const jwt = require("jsonwebtoken");
+const {
+  followNotification,
+  removeFollowNotification,
+} = require("../Controllers/NotifucationCtl");
 require("dotenv").config;
 const { OAuth2Client } = require("google-auth-library");
 const { CLIENT_URL, GOOGLE_API_KEY, GH_CLIENT_ID, GH_CLIENT_SECRET } =
@@ -382,6 +387,57 @@ const userCtrl = {
       return res.json({
         status: 400,
         msg: "Could not update user!",
+      });
+    }
+  },
+  FollowUser: async (req, res, next) => {
+    const { userId, followId } = req.body;
+    let user;
+    try {
+      user = await User.findByIdAndUpdate(
+        userId,
+        { $addToSet: { following: followId } },
+        { new: true }
+      );
+      userToFollow = await User.findByIdAndUpdate(
+        followId,
+        { $addToSet: { followers: userId } },
+        { new: true }
+      );
+      await followNotification(userId, followId);
+      return res.status(201).json({
+        status: 200,
+        msg: "Flowing Successfully!",
+        user,
+      });
+    } catch (err) {
+      return res.json({ status: 400, msg: "Follow failed, please try again" });
+    }
+  },
+  unfollowUser: async (req, res, next) => {
+    const { userId, followId } = req.body;
+    let user;
+    try {
+      user = await User.findByIdAndUpdate(
+        userId,
+        { $pull: { following: followId } },
+        { new: true }
+      );
+      userToFollow = await User.findByIdAndUpdate(
+        followId,
+        { $pull: { followers: userId } },
+        { new: true }
+      );
+      await removeFollowNotification(userId, followId);
+      return res.status(201).json({
+        status: 200,
+        msg: "UnFlowing Successfully!",
+        user,
+      });
+    } catch (err) {
+      return res.json({
+        status: 400,
+        msg: "UnFollow failed, please try again",
       });
     }
   },
