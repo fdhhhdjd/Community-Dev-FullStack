@@ -2,7 +2,7 @@
 
 # BackEnd Code By: Nguyễn Tiến Tài
 
-## WebSite: https://video-call-dev.herokuapp.com
+## WebSite: (hiện tại chưa có ^^
 
 
 ## Tài Khoản Donate li Cf để có động lực code cho anh em tham khảo 😄😄
