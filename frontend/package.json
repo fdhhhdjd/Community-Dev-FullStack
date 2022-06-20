@@ -22,8 +22,10 @@
     "react-scripts": "5.0.1",
     "react-simplemde-editor": "^5.0.2",
     "react-syntax-highlighter": "^15.5.0",
+    "react-toastify": "^9.0.4",
     "react-transition-group": "^4.4.2",
     "socket.io-client": "^4.5.1",
+    "sweetalert": "^2.1.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

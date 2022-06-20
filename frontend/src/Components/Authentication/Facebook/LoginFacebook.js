@@ -2,30 +2,35 @@ import React from "react";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { AiFillFacebook } from "@react-icons/all-files/ai/AiFillFacebook";
 import axios from "axios";
+import MessageNotification from "../../../utils/ShareHandle/index";
 const LoginFacebook = () => {
+  const { REACT_APP_KEY_FACEBOOK_TEST, REACT_APP_KEY_FACEBOOK } = process.env;
   const responseFacebook = async (response) => {
-    console.log(response);
     if (response.accessToken) {
-      await axios
-        .post("/api/auth/facebook", {
-          userID: response.userID,
-          accessToken: response.accessToken,
-        })
-        .then((items) => {
-          console.log(items);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      try {
+        await axios
+          .post("/api/auth/facebook", {
+            userID: response.userID,
+            accessToken: response.accessToken,
+          })
+          .then((items) => {
+            console.log(items);
+          })
+          .catch((err) => {
+            MessageNotification(err, "error");
+          });
+      } catch (error) {
+        MessageNotification(error, "error");
+      }
     } else {
-      console.log("Error");
+      MessageNotification("Server Fail @-@", "error");
     }
   };
   return (
     <React.Fragment>
       <FacebookLogin
-        // appId={process.env.REACT_APP_KEY_FACEBOOK}
-        appId={process.env.REACT_APP_KEY_FACEBOOK_TEST}
+        // appId={REACT_APP_KEY_FACEBOOK}
+        appId={REACT_APP_KEY_FACEBOOK_TEST}
         autoLoad={false}
         callback={responseFacebook}
         icon="fa-facebook"
