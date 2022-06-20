@@ -4,7 +4,7 @@ export const Login = lazy(() => {
   return new Promise((resolve) => {
     setTimeout(
       () => resolve(import("../../Pages/Authentications/Login/index")),
-      1500
+      1000
     );
   });
 });

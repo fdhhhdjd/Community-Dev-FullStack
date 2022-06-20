@@ -4,6 +4,7 @@ import { FcGoogle } from "@react-icons/all-files/fc/FcGoogle";
 import { useState } from "react";
 import axios from "axios";
 const LoginGoogle = () => {
+  const { REACT_APP_GOOGLE_CLIENT_ID } = process.env;
   const [showLoginButton, setShowLoginButton] = useState(true);
 
   const onLoginSuccess = async (res) => {
@@ -25,7 +26,7 @@ const LoginGoogle = () => {
     <React.Fragment>
       {showLoginButton && (
         <GoogleLogin
-          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+          clientId={REACT_APP_GOOGLE_CLIENT_ID}
           render={(renderProps) => (
             <button
               className="btn btn__social"

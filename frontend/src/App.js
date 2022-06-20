@@ -5,6 +5,7 @@ import { Login, Home } from "./utils/ShareHandle/LazyRouteHandle";
 import Register from "./Pages/Authentications/Register/index";
 import NotFound from "./Pages/NotFound/index";
 import { ToastContainer } from "react-toastify";
+import "./Styles/Global.css";
 import CheckPageNotAuth from "./Components/Authentication/CheckPageNotAuth/index";
 function App() {
   return (
